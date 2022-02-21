@@ -1,0 +1,57 @@
+<?php
+/**
+ * 
+ *
+ * @package     Imaginate Solutions's File Uploads Addon for WooCommerce Product Image Changer
+ * @author      Martin De Jonge
+ * @license     GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name: Imaginate Solutions's File Uploads Addon for WooCommerce Product Image Changer
+ * Plugin URI:  N/A
+ * Description: This plugin is a addon for File Uploads Addon for WooCommerce by Imaginate Solutions. The plugin will change the product image according to the uploaded file - File Uploads Addon for WooCommerce by Imaginate Solutions is required.
+ * Version:     1.0.0
+ * Author:      Martin De Jonge
+ * Author URI:  https://www.fiverr.com/martindejonge_
+ * Text Domain: Imaginate Solutions's File Uploads Addon for WooCommerce Product Image Changer
+ * License:     GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ */
+
+add_action( 'woocommerce_after_add_to_cart_button', 'add_script' );
+
+function add_script()
+{
+	echo '
+	<script>
+	    // Answer from https://stackoverflow.com/questions/41588745/how-add-id-element-to-the-specific-class-line
+	    // Get single page product image and add the id mdj_woo_product_image to it.
+	    var x = document.getElementsByClassName("wp-post-image")[0];
+        x.id="mdj_woo_product_image";
+	
+	    // Answer from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
+	    // Get the file url and change the image source of mdj_woo_product_image
+	    wau_file_addon.onchange = evt => {
+          const [file] = wau_file_addon.files
+          if (file) {
+            mdj_woo_product_image.src = URL.createObjectURL(file)
+          }
+        }
+	</script>
+	';
+}
+
+function add_size($atts)
+{
+	echo '
+		<p style="font-size:18px; font-weight:600;">
+			<span style="color:black;">Find Your Size - </span>
+			<span><a style="color:#F76D6D;" href="' . $atts["val"] . '">See Sizes</a></span>
+		</p>
+	';
+}
+
+add_shortcode('size', 'add_size');
+// Use shortcode [size]
+
+?>
