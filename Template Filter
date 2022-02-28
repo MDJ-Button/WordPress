@@ -20,17 +20,22 @@
 
 //add_action( 'woocommerce_after_add_to_cart_button', 'add_script' );
 
-function mdj_filter()
+function mdj_filter($atts)
 {
-	echo '
+	if($atts["val"] == "shirt")
+	{
+		echo '
 		<head>
 			<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 		</head>
-	
-	
+		
 		<style>
-			.step_age {
+			.step_size {
 				display:none;
+			}
+			
+			.step_forkids {
+				display: none;
 			}
 			
 			button#download_btn {
@@ -48,16 +53,22 @@ function mdj_filter()
 		</style>
 	
 		<form id="templateform" method="post">
-		  <label for="gender">Gender</label>
-		  <select name="gender" id="gender" onchange="show_age()">
-		  	<option value="" disabled selected hidden>Select Gender</option>
+		  <label for="tshirttype">Choose Your T-Shirt Type</label>
+		  <select class="thshirttype" name="tshirttype" id="tshirttype" onchange="show_size(this.options[this.selectedIndex].value)">
+		  	<option value="" disabled selected hidden>Select T-Shirt Type</option>
+			<option value="kids">For Kids</option>
+			<option value="men">For Men</option>
+			<option value="woman">For Woman</option>
+		  </select>
+		  
+		  <select class="step_forkids" name="gender" id="gender" onchange="show_size(this.options[this.selectedIndex].value)" multiple>
 			<option value="boys">Boys</option>
 			<option value="girls">Girls</option>
 		  </select>
 		  
-		  <label class="step_age" id="age_label" for="age">Age</label>
-		  <select class="step_age" name="age" id="age">
-		  	<option value="" disabled selected hidden>Select Age</option>
+		  <label class="step_size" id="size_label" for="size">Choose Your Size</label>
+		  <select class="step_size" name="size" id="size">
+		  	<option value="" disabled selected hidden>Select Size</option>
 			<option value="three_four">3-4</option>
 			<option value="five_six">5-6</option>
 			<option value="seven_eight">7-8</option>
@@ -74,10 +85,29 @@ function mdj_filter()
 		<button class="mdjbtn" id="download_btn"><a id="download_link"https://creativethreadsworks.co.uk">Download Template</a></button>
 		
 		<script>
-		function show_age() 
+		function show_size(chosen) 
 		{
-			document.getElementById("age_label").style.display = "block";
-			document.getElementById("age").style.display = "block";
+			if(chosen === "kids")
+			{
+				document.getElementById("gender").style.display = "block";
+			}
+			else if(chosen === "men")
+			{
+				document.getElementById("gender").style.display = "none";
+				document.getElementById("size_label").style.display = "block";
+				document.getElementById("size").style.display = "block";
+			}
+			else if(chosen === "woman")
+			{
+				document.getElementById("gender").style.display = "none";
+				document.getElementById("size_label").style.display = "block";
+				document.getElementById("size").style.display = "block";
+			}
+			else
+			{
+				document.getElementById("size_label").style.display = "block";
+				document.getElementById("size").style.display = "block";
+			}
 		}
 		
 		function submit_data()
@@ -85,40 +115,64 @@ function mdj_filter()
 			document.getElementById("download_btn").style.display = "block";
 			var link = document.getElementById("download_link");
 			
-			var gender = document.forms["templateform"]["gender"].value;
-			var age = document.forms["templateform"]["age"].value;
+			var tshirttype = document.forms["templateform"]["tshirttype"].value;
 			
-			if(gender === "boys") 
-			{ 
-				if(age === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-3-4.pdf"; }
-				else if(age === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-5-6.pdf"; }
-				else if(age === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-7-8.pdf"; }
-				else if(age === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-9-10.pdf"; }
-				else if(age === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-11-12.pdf"; }
-				else if(age === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-13-14.pdf"; }
+			if(tshirttype == "kids") 
+			{
+				var gender = document.forms["templateform"]["gender"].value;
+				var size = document.forms["templateform"]["size"].value;
+
+				console.log("1"); console.log(tshirttype); console.log(gender); console.log(size);
+				
+				if(gender === "boys") 
+				{ 
+					if(size === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-3-4.pdf"; }
+					else if(size === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-5-6.pdf"; }
+					else if(size === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-7-8.pdf"; }
+					else if(size === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-9-10.pdf"; }
+					else if(size === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-11-12.pdf"; }
+					else if(size === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-13-14.pdf"; }
+				}
+
+				else if(gender === "girls") 
+				{ 
+					if(size === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-3-4.pdf"; }
+					else if(size === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-5-6.pdf"; }
+					else if(size === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-7-8.pdf"; }
+					else if(size === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-9-10.pdf"; }
+					else if(size === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-11-12.pdf"; }
+					else if(size === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-13-14.pdf"; }
+				}
+
+				else
+				{
+					alert("Template-Filter - Something went wrong");
+				}
 			}
-			
-			else if(gender === "girls") 
-			{ 
-				if(age === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-3-4.pdf"; }
-				else if(age === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-5-6.pdf"; }
-				else if(age === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-7-8.pdf"; }
-				else if(age === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-9-10.pdf"; }
-				else if(age === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-11-12.pdf"; }
-				else if(age === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-13-14.pdf"; }
-			}
-			
 			else
 			{
-				alert("Template-Filter - Something went wrong");
+				var size = document.forms["templateform"]["size"].value;
+
+				console.log("2"); console.log(tshirttype); console.log(size);
 			}
-			
-			console.log(gender); console.log(age);
-			
 		}
 		
 		</script>
 	';
+	}
+	else if($atts["val"] == "leggings")
+	{
+		echo '<p>leggings not implemented yet.</p>';
+	}
+	else if($atts["val"] == "shoes")
+	{
+		echo '<p>shoes not implemented yet.</p>';
+	}
+	else
+	{
+		echo '<p>'.$atts["val"].' is not a known value.</p>';
+	}
+	
 }
 
 add_shortcode('template_filter', 'mdj_filter');
