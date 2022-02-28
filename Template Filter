@@ -1,0 +1,127 @@
+<?php
+/**
+ * 
+ *
+ * @package     Template Filter
+ * @author      Martin De Jonge
+ * @license     GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name: Template Filter
+ * Plugin URI:  N/A
+ * Description: This plugin is used to filter out the correct template. Use shortcode [template_filter]
+ * Version:     1.0.0
+ * Author:      Martin De Jonge
+ * Author URI:  https://www.fiverr.com/martindejonge_
+ * Text Domain: Template Filter
+ * License:     GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ */
+
+//add_action( 'woocommerce_after_add_to_cart_button', 'add_script' );
+
+function mdj_filter()
+{
+	echo '
+		<head>
+			<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+		</head>
+	
+	
+		<style>
+			.step_age {
+				display:none;
+			}
+			
+			button#download_btn {
+				display:none;
+			}
+			
+			.mdjbtn {
+				background-color: #F76D6D !important;
+				color: white !important;
+			}
+			
+			a#download_link {
+				color: white !important;
+			}
+		</style>
+	
+		<form id="templateform" method="post">
+		  <label for="gender">Gender</label>
+		  <select name="gender" id="gender" onchange="show_age()">
+		  	<option value="" disabled selected hidden>Select Gender</option>
+			<option value="boys">Boys</option>
+			<option value="girls">Girls</option>
+		  </select>
+		  
+		  <label class="step_age" id="age_label" for="age">Age</label>
+		  <select class="step_age" name="age" id="age">
+		  	<option value="" disabled selected hidden>Select Age</option>
+			<option value="three_four">3-4</option>
+			<option value="five_six">5-6</option>
+			<option value="seven_eight">7-8</option>
+			<option value="nine_ten">9-10</option>
+			<option value="eleven_twelve">11-12</option>
+			<option value="thirteen_fourteen">13-14</option>
+		  </select>
+		  
+		  <br><br>
+		  <input class="mdjbtn" type="button" onclick="submit_data()" value="Submit Size">
+		</form>
+		
+		<p></p>
+		<button class="mdjbtn" id="download_btn"><a id="download_link"https://creativethreadsworks.co.uk">Download Template</a></button>
+		
+		<script>
+		function show_age() 
+		{
+			document.getElementById("age_label").style.display = "block";
+			document.getElementById("age").style.display = "block";
+		}
+		
+		function submit_data()
+		{ 
+			document.getElementById("download_btn").style.display = "block";
+			var link = document.getElementById("download_link");
+			
+			var gender = document.forms["templateform"]["gender"].value;
+			var age = document.forms["templateform"]["age"].value;
+			
+			if(gender === "boys") 
+			{ 
+				if(age === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-3-4.pdf"; }
+				else if(age === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-5-6.pdf"; }
+				else if(age === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-7-8.pdf"; }
+				else if(age === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-9-10.pdf"; }
+				else if(age === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-11-12.pdf"; }
+				else if(age === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-13-14.pdf"; }
+			}
+			
+			else if(gender === "girls") 
+			{ 
+				if(age === "three_four") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-3-4.pdf"; }
+				else if(age === "five_six") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-5-6.pdf"; }
+				else if(age === "seven_eight") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-7-8.pdf"; }
+				else if(age === "nine_ten") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-9-10.pdf"; }
+				else if(age === "eleven_twelve") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-11-12.pdf"; }
+				else if(age === "thirteen_fourteen") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-13-14.pdf"; }
+			}
+			
+			else
+			{
+				alert("Template-Filter - Something went wrong");
+			}
+			
+			console.log(gender); console.log(age);
+			
+		}
+		
+		</script>
+	';
+}
+
+add_shortcode('template_filter', 'mdj_filter');
+// Use shortcode [template_filter]
+
+?>
