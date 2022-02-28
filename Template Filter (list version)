@@ -1,0 +1,236 @@
+<?php
+/**
+ * 
+ *
+ * @package     Template Filter
+ * @author      Martin De Jonge
+ * @license     GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name: Template Filter
+ * Plugin URI:  N/A
+ * Description: This plugin is used to filter out the correct template. Use shortcode [template_filter]
+ * Version:     1.0.0
+ * Author:      Martin De Jonge
+ * Author URI:  https://www.fiverr.com/martindejonge_
+ * Text Domain: Template Filter
+ * License:     GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ */
+
+//add_action( 'woocommerce_after_add_to_cart_button', 'add_script' );
+
+function mdj_filter($atts)
+{
+	if($atts["val"] == "shirt")
+	{
+		echo '
+			<style>
+				ul {
+					list-style-type: none;
+				}
+				
+				li {
+					margin: 0 !important;
+    				padding: 0 !important;
+				}
+				
+				.mdj_filter_menu_button {
+					background-color: #F76D6D;
+					color: white !important;
+					width: 99%;
+					text-align: left;
+				}
+				
+				.mdj_filter_menu_button:hover {
+					width: 100%;
+				}
+				
+				.mdj_kids_submenu {
+					display: none;
+				}
+				
+				.mdj_filter_size_list {
+					display:none;
+				}
+				
+				.mdj_filter_download_button {
+					display:none;
+				}
+				
+			</style>
+		
+			<h4>Choose Your T-Shirt</h4>
+			<ul>
+				<li><button id="kids" class="mdj_filter_menu_button" onclick="first_step(\'kids\')">For Kids</button>
+					<ul class="mdj_kids_submenu" id="mdj_kids_ul">
+			  			<li style="margin-bottom: 0px;"><button id="boys" class="mdj_filter_menu_button" onclick="first_step(\'boys\')">Boys</button></li>
+			  			<li><button id="girls" class="mdj_filter_menu_button" onclick="first_step(\'girls\')">Girls</button></li>
+					</ul>
+				</li>
+			  	<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">For Men</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Woman</button></li>
+			</ul>
+			
+			<h4 class="mdj_filter_size_list" id="mdj_filter_size_list_label">Choose Your Size</h4>
+			<select class="mdj_filter_size_list" id="mdj_filter_size_list" onchange="second_step(this.options[this.selectedIndex].value)">
+			</select>
+			
+			<p></p>
+		<button style="display:none" class="mdj_filter_menu_button" id="download_btn"><a style="color:white" id="download_link" href="https://creativethreadsworks.co.uk">Download Template</a></button>
+			
+			<script>
+			
+				var first_step_selection = "";
+				var second_step_selection = "";
+				
+				var boys_sizes = ["Select Size", "3-4","5-6","7-8", "9-10", "11-12", "13-14"];
+				var girls_sizes = ["Select Size", "3-4","5-6","7-8", "9-10", "11-12", "13-14"];
+			
+				function first_step(selection)
+				{
+					if(first_step_selection !== "")
+					{
+						if(first_step_selection !== selection)
+						{
+							var x = document.getElementById("mdj_filter_size_list");
+							var length = x.options.length;
+							for (i = length - 1; i >= 0; i--) {
+							  x.options[i] = null;
+							}
+							
+							document.getElementById(first_step_selection).style.backgroundColor = \'#F76D6D\'; 
+						}
+					}
+				
+					if(selection === "kids") 
+					{
+						first_step_selection = "kids";
+						console.log(first_step_selection);
+						document.getElementById(\'kids\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_kids_ul\').style.display = \'block\'; 
+						
+					}
+					
+					else if(selection === "boys") 
+					{
+						first_step_selection = "boys";
+						console.log(first_step_selection);
+						document.getElementById(\'boys\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
+						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
+						
+						var x = document.getElementById("mdj_filter_size_list");
+						
+						for(var i = 0; i < boys_sizes.length; i++) 
+						{
+							var option = document.createElement("option");
+							option.text = boys_sizes[i];
+							x.add(option);
+							
+							if(i === 0)
+							{
+								option.setAttribute("disabled", "disabled");
+							}
+						}
+					}
+					
+					else if(selection === "girls") 
+					{
+						first_step_selection = "girls";
+						console.log(first_step_selection);
+						document.getElementById(\'girls\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
+						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
+						
+						var x = document.getElementById("mdj_filter_size_list");
+						
+						for(var i = 0; i < girls_sizes.length; i++) 
+						{
+							var option = document.createElement("option");
+							option.text = girls_sizes[i];
+							x.add(option);
+							
+							if(i === 0)
+							{
+								option.setAttribute("disabled", "disabled");
+							}
+						}
+					}
+					
+					else if(selection === "men") 
+					{
+						first_step_selection = "men";
+						console.log(first_step_selection);
+						document.getElementById(\'men\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
+						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
+					}
+					
+					else if(selection === "woman") 
+					{
+						first_step_selection = "woman";
+						console.log(first_step_selection);
+						document.getElementById(\'woman\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
+						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
+					}
+				}
+				
+				function second_step(size)
+				{
+					document.getElementById(\'download_btn\').style.display = \'block\';
+					var link = document.getElementById("download_link");
+					
+					if(first_step_selection === "boys")
+					{
+						if(size === "3-4") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-3-4.pdf"; }
+					else if(size === "5-6") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-5-6.pdf"; }
+					else if(size === "7-8") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-7-8.pdf"; }
+					else if(size === "9-10") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-9-10.pdf"; }
+					else if(size === "11-12") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-11-12.pdf"; }
+					else if(size === "13-14") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Boys-Age-13-14.pdf"; }
+					}
+					
+					else if(first_step_selection === "girls") 
+					{ 
+						if(size === "3-4") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-3-4.pdf"; }
+						else if(size === "5-6") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-5-6.pdf"; }
+						else if(size === "7-8") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-7-8.pdf"; }
+						else if(size === "9-10") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-9-10.pdf"; }
+						else if(size === "11-12") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-11-12.pdf"; }
+						else if(size === "13-14") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/02/Girls-Age-13-14.pdf"; }
+					}
+					
+					else if(first_step_selection === "men") 
+					{ 
+						link.href = "https://creativethreadsworks.co.uk";
+					}
+					
+					else if(first_step_selection === "woman") 
+					{ 
+						link.href = "https://creativethreadsworks.co.uk";
+					}
+					
+					else
+					{
+						alert("Something went wrong in step_two()");
+					}
+				}
+			
+			</script>
+		';
+	}
+}
+
+add_shortcode('template_filter', 'mdj_filter');
+// Use shortcode [template_filter]
+
+?>
