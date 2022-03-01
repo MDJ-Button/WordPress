@@ -74,7 +74,7 @@ function mdj_filter($atts)
 					</ul>
 				</li>
 			  	<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">For Men</button></li>
-			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Woman</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'women\')">For Woman</button></li>
 			</ul>
 					';
 			}
@@ -84,7 +84,7 @@ function mdj_filter($atts)
 				echo '
 			<ul>
 			  	<li><button id="girls" class="mdj_filter_menu_button" onclick="first_step(\'girls\')">For Girls</button></li>
-			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Woman</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'women\')">For Woman</button></li>
 			</ul>
 					';
 			}
@@ -95,7 +95,7 @@ function mdj_filter($atts)
 			<ul>
 			  	<li><button id="children" class="mdj_filter_menu_button" onclick="first_step(\'children\')">Children\'s</button></li>
 				<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">Men\'s</button></li>
-			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">Woman\'s</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">Women\'s</button></li>
 			</ul>
 					';
 			}
