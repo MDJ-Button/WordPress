@@ -61,7 +61,11 @@ function mdj_filter($atts)
 				
 			</style>
 		
-			<h4>Choose Your ' . $var . '</h4>
+			<h4>Choose Your ' . $var . '</h4>';
+			
+			if($var == "T-Shirt")
+			{
+				echo '
 			<ul>
 				<li><button id="kids" class="mdj_filter_menu_button" onclick="first_step(\'kids\')">For Kids</button>
 					<ul class="mdj_kids_submenu" id="mdj_kids_ul">
@@ -72,7 +76,31 @@ function mdj_filter($atts)
 			  	<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">For Men</button></li>
 			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Woman</button></li>
 			</ul>
+					';
+			}
+		
+			else if($var == "Leggings")
+			{
+				echo '
+			<ul>
+			  	<li><button id="girls" class="mdj_filter_menu_button" onclick="first_step(\'girls\')">For Girls</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Woman</button></li>
+			</ul>
+					';
+			}
+		
+			else if($var == "Footwear")
+			{
+				echo '
+			<ul>
+			  	<li><button id="children" class="mdj_filter_menu_button" onclick="first_step(\'children\')">Children\'s</button></li>
+				<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">Men\'s</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">Woman\'s</button></li>
+			</ul>
+					';
+			}
 			
+			echo '
 			<h4 class="mdj_filter_size_list" id="mdj_filter_size_list_label">Choose Your Size</h4>
 			<select class="mdj_filter_size_list" id="mdj_filter_size_list" onchange="second_step(this.options[this.selectedIndex].value)">
 			</select>
@@ -97,16 +125,13 @@ function mdj_filter($atts)
 				
 				else if(PHPVar === "Leggings")
 				{
-					var boys_sizes = ["Select Size"];
-					var girls_sizes = ["Select Size"];
-					var men_sizes = ["Select Size"];
-					var woman_sizes = ["Select Size"];
+					var girls_sizes = ["Select Size", "5-6", "6-7", "7-8", "8-9", "9-10", "10-12", "12-14"];
+					var woman_sizes = ["Select Size", "XS","S","M", "L", "XL", "2XL", "3XL", "4XL"];
 				}
 				
 				else if(PHPVar === "Footwear")
 				{
-					var boys_sizes = ["Select Size"];
-					var girls_sizes = ["Select Size"];
+					var children_sizes = ["Select Size"];
 					var men_sizes = ["Select Size"];
 					var woman_sizes = ["Select Size"];
 				}
@@ -191,7 +216,8 @@ function mdj_filter($atts)
 						console.log(first_step_selection);
 						document.getElementById(\'men\').style.backgroundColor = \'black\'; 
 						
-						document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						if(PHPVar === "T-Shirt") document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						
 						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
 						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
 						
@@ -216,7 +242,8 @@ function mdj_filter($atts)
 						console.log(first_step_selection);
 						document.getElementById(\'woman\').style.backgroundColor = \'black\'; 
 						
-						document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						if(PHPVar === "T-Shirt") document.getElementById(\'mdj_kids_ul\').style.display = \'none\'; 
+						
 						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
 						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
 						
@@ -226,6 +253,30 @@ function mdj_filter($atts)
 						{
 							var option = document.createElement("option");
 							option.text = woman_sizes[i];
+							x.add(option);
+							
+							if(i === 0)
+							{
+								option.setAttribute("disabled", "disabled");
+							}
+						}
+					}
+					
+					else if(selection === "children") 
+					{
+						first_step_selection = "children";
+						console.log(first_step_selection);
+						document.getElementById(\'children\').style.backgroundColor = \'black\'; 
+						
+						document.getElementById(\'mdj_filter_size_list_label\').style.display = \'block\';
+						document.getElementById(\'mdj_filter_size_list\').style.display = \'block\';
+						
+						var x = document.getElementById("mdj_filter_size_list");
+						
+						for(var i = 0; i < children_sizes.length; i++) 
+						{
+							var option = document.createElement("option");
+							option.text = children_sizes[i];
 							x.add(option);
 							
 							if(i === 0)
@@ -286,35 +337,33 @@ function mdj_filter($atts)
 
 					else if(PHPVar === "Leggings")
 					{
-						if(first_step_selection === "boys") 
+						if(first_step_selection === "girls") 
 						{ 
-							link.href = "https://creativethreadsworks.co.uk";
+							if(size === "5-6") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-5-6.pdf"; }
+							else if(size === "6-7") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-6-7.pdf"; }
+							else if(size === "7-8") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-7-8.pdf"; }
+							else if(size === "8-9") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-8-9.pdf"; }
+							else if(size === "9-10") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-9-10.pdf"; }
+							else if(size === "10-12") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-10-12.pdf"; }
+							else if(size === "12-14") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Girls-Size-12-14.pdf"; }
 						}
 						
-						else if(first_step_selection === "girls") 
+						else if(first_step_selection === "woman") 
 						{ 
-							link.href = "https://creativethreadsworks.co.uk";
-						}
-						
-						else if(first_step_selection === "men") 
-						{ 
-							link.href = "https://creativethreadsworks.co.uk";
-						}
-						
-						if(first_step_selection === "woman") 
-						{ 
-							link.href = "https://creativethreadsworks.co.uk";
+							if(size === "XS") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-XS.pdf"; }
+							else if(size === "S") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-S.pdf"; }
+							else if(size === "M") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-M.pdf"; }
+							else if(size === "L") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-L.pdf"; }
+							else if(size === "XL") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-XL.pdf"; }
+							else if(size === "2XL") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-2XL.pdf"; }
+							else if(size === "3XL") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-3XL.pdf"; }
+							else if(size === "4XL") { link.href = "http://creativethreadsworks.co.uk/wp-content/uploads/2022/03/Womens-Size-4XL.pdf"; }
 						}
 					}
 
 					else if(PHPVar === Footwear)
 					{
-						if(first_step_selection === "boys") 
-						{ 
-							link.href = "https://creativethreadsworks.co.uk";
-						}
-						
-						else if(first_step_selection === "girls") 
+						if(first_step_selection === "children") 
 						{ 
 							link.href = "https://creativethreadsworks.co.uk";
 						}
