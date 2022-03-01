@@ -74,7 +74,7 @@ function mdj_filter($atts)
 					</ul>
 				</li>
 			  	<li><button id="men" class="mdj_filter_menu_button" onclick="first_step(\'men\')">For Men</button></li>
-			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'women\')">For Woman</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Women</button></li>
 			</ul>
 					';
 			}
@@ -84,7 +84,7 @@ function mdj_filter($atts)
 				echo '
 			<ul>
 			  	<li><button id="girls" class="mdj_filter_menu_button" onclick="first_step(\'girls\')">For Girls</button></li>
-			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'women\')">For Woman</button></li>
+			  	<li><button id="woman" class="mdj_filter_menu_button" onclick="first_step(\'woman\')">For Women</button></li>
 			</ul>
 					';
 			}
@@ -140,14 +140,14 @@ function mdj_filter($atts)
 				{
 					if(first_step_selection !== "")
 					{
+						var x = document.getElementById("mdj_filter_size_list");
+						var length = x.options.length;
+						for (i = length - 1; i >= 0; i--) {
+							x.options[i] = null;
+						}
+						
 						if(first_step_selection !== selection)
 						{
-							var x = document.getElementById("mdj_filter_size_list");
-							var length = x.options.length;
-							for (i = length - 1; i >= 0; i--) {
-							  x.options[i] = null;
-							}
-							
 							document.getElementById(first_step_selection).style.backgroundColor = \'#F76D6D\'; 
 						}
 					}
