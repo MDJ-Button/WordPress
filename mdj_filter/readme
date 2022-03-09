@@ -1,1 +1,9 @@
-This is a plugin that works with WooBeWoo to retrive products based on their sku
+This is a plugin that works with WooBeWoo to retrive products based on their sku.
+
+I used jquery to get the selected options from WooBeWoo and once the Tire Size is set I call a JS function ajax that uses Ajax to pass the variables to the PHP script Action.php
+I pass the variables to PHP variables and get the products that matches the filters.
+I could not find a way to retrive only the product that matches all the filters in SQL so I got a list of products that matched any of the filters.
+I pushed the product ID's to a PHP array and used the "array_count_values" function to create a new multidemtional array that holds the ID and the amount of times it got counted.
+I use the "max" function to get the biggest value and I created a variable that uses the "array_search" function to key and I then loop the array returned by the database search again and
+if the product ID matches the key I then pass the SKU to a variable and print it for Ajax.
+If Ajax returns success then I use window.location to change the url to filter according to the data I got from PHP.
