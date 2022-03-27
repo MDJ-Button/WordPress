@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_loop_add_to_cart_link', 'qty_before_after_btn', 10, 3);
+function qty_before_after_btn( $add_to_cart_html)
+{
+	echo wc_get_stock_html( $product ) . $add_to_cart_html;
+}
