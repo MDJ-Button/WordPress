@@ -1,0 +1,25 @@
+add_filter( 'woocommerce_loop_add_to_cart_link', 'qty_before_after_btn', 10, 3);
+function qty_before_after_btn( $add_to_cart_html, $product, $args )
+{
+	echo wc_get_stock_html( $product );
+			
+    $product = wc_get_product( get_the_ID() );
+    $is_wvsp_active = class_exists( 'Woo_Variation_Swatches_Pro' ) ? true : false;
+    $is_variable_enable = false;
+
+    if ( $is_wvsp_active ) {
+    	$get_wvsp_options   = get_option( 'woo_variation_swatches' );
+        $is_enable_swatches = $get_wvsp_options['show_on_archive'];
+        $is_enable_catalog_mode = $get_wvsp_options['enable_catalog_mode'];
+        $is_variable_enable = ( 'variable' == $product->get_type() && 1 == $is_enable_swatches && 0 == $is_enable_catalog_mode ) ? true : false ;
+	}
+
+    if ( $product && ( 'simple' == $product->get_type() || $is_variable_enable ) && ! $product->is_sold_individually() && $product->is_purchasable() && $product->is_in_stock() ) {
+                woocommerce_quantity_input( array(
+                    'min_value' => 1,
+                    'max_value' => $product->backorders_allowed() ? '' : $product->get_stock_quantity()
+    	) );
+    }
+	
+	echo "<br>" . $add_to_cart_html;
+}
