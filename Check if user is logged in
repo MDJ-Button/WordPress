@@ -1,0 +1,19 @@
+// I used this code to check if a user is logged in when accessing the shop page otherwise they get redirected
+
+add_action( 'template_redirect', 'shop_redirect_if_guest' );
+
+function shop_redirect_if_guest() 
+{
+    if(is_shop())
+	{
+		if(!is_user_logged_in())
+		{
+			echo '
+					<script>
+						alert("You must be logged in to access the shop page.\nYou will be redirected to the login page.");
+						window.location.href = "https://africhow.co.za/login";
+					</script>
+				';
+		}
+	}
+}
